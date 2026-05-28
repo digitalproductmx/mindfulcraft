@@ -1493,39 +1493,66 @@ style="background-color: rgba(243, 239, 234, 0.9)"
       let chatOpen = false;
 
       const knowledgeBase = {
-        funciones: {
-          keywords: ["funciones", "características", "qué ofrece"],
-          response: `Nuestras funciones principales:\n\n🍵 **Ritual del Té**: Temporizador consciente e intención diaria\n🧵 **Sashiko Studio**: Patrones con animación\n🖋️ **Caligrafía Flow**: Frases meditativas\n📓 **Diario Emocional**: Reflexión guiada`,
-        },
-        eventos: {
-          keywords: ["eventos", "taller", "ceremonia"],
-          response: `Tenemos 5 experiencias presenciales:\n\n🍵 Ceremonia del Té\n🧵 Sashiko Studio\n🖌️ Caligrafía Japonesa & Sumi-e\n✍️ Caligrafía China\n📓 Journaling & Collage\n\n¿Cuál te interesa?`,
-        },
-        valores: {
-          keywords: ["valores", "principios"],
-          response: `Nuestros valores:\n• ♿ Inclusión Real\n• 🍃 Calma sobre Productividad\n• ✨ Ritual sobre Consumo\n• 📚 Aprendizaje Continuo\n• 🎨 Belleza Funcional\n• 🌐 Tecnología Consciente`,
-        },
-        contacto: {
-          keywords: ["contacto", "email", "formulario"],
-          response: `📧 Email: indigolilobarcena@delulufuture.dev\n📝 Formulario: https://tally.so/r/9qDjNE\n\nRespondemos en 24-48 horas.`,
-        },
-      };
+  features: {
+    keywords: [
+      "features",
+      "services",
+      "experiences",
+      "offer",
+      "workshops",
+    ],
+    response: `Main experiences:\n\n🍵 **Tea Ceremony**: Mindful rituals and daily intention\n🧵 **Sashiko Studio**: Traditional stitching and textile experimentation\n🖋️ **Flow Calligraphy**: Meditative phrases and slow artistic practice\n📓 **Emotional Journaling**: Guided reflection and emotional expression`,
+  },
 
-      function generateResponse(text) {
-        const lower = text.toLowerCase();
-        for (const [key, data] of Object.entries(knowledgeBase)) {
-          if (data.keywords.some((kw) => lower.includes(kw))) {
-            return data.response;
-          }
-        }
-        const responses = [
-          "¡Buena pregunta! 🤔 Puedo ayudarte con funciones, eventos, valores o contacto.",
-          "Interesante. ¿Quieres saber más sobre algo específico?",
-          "💚 ¿Hay algo en particular que te interese conocer?",
-        ];
-        return responses[Math.floor(Math.random() * responses.length)];
-      }
+  events: {
+    keywords: [
+      "events",
+      "workshop",
+      "ceremony",
+      "sessions",
+      "classes",
+    ],
+    response: `I currently offer immersive in-person experiences:\n\n🍵 Tea Ceremony\n🧵 Sashiko Studio\n🖌️ Japanese Calligraphy & Sumi-e\n✍️ Chinese Calligraphy\n📓 Journaling & Collage\n\nWhich one would you like to explore?`,
+  },
 
+  values: {
+    keywords: [
+      "values",
+      "principles",
+      "mindfulness",
+      "philosophy",
+    ],
+    response: `My values:\n• ♿ Real Inclusion\n• 🍃 Calm Over Productivity\n• ✨ Ritual Over Consumption\n• 📚 Continuous Learning\n• 🎨 Functional Beauty\n• 🌐 Mindful Technology`,
+  },
+
+  contact: {
+    keywords: [
+      "contact",
+      "email",
+      "form",
+      "booking",
+      "session",
+    ],
+    response: `📧 Email: indigolilobarcena@delulufuture.dev\n📝 Form: https://tally.so/r/9qDjNE\n\nI usually respond within 24–48 hours.`,
+  },
+};
+function generateResponse(text) {
+  const lower = text.toLowerCase();
+
+  for (const [key, data] of Object.entries(knowledgeBase)) {
+    if (data.keywords.some((kw) => lower.includes(kw))) {
+      return data.response;
+    }
+  }
+
+  const responses = [
+    "Great question! 🤔 I can help you with features, workshops, values or contact information.",
+    "Interesting ✨ Would you like to explore a specific experience?",
+    "💚 Is there something in particular you would like to know?",
+  ];
+
+  return responses[Math.floor(Math.random() * responses.length)];
+}
       function createMessage(text, isUser) {
         const div = document.createElement("div");
         div.className = isUser ? "chatbot-msg-user" : "chatbot-msg-bot";
@@ -1541,66 +1568,66 @@ style="background-color: rgba(243, 239, 234, 0.9)"
         div.appendChild(bubble);
         return div;
       }
-
       function showTyping() {
-        const div = document.createElement("div");
-        div.className = "chatbot-msg-bot";
-        div.innerHTML =
-          '<div class="chatbot-typing"><span></span><span></span><span></span></div>';
-        div.id = "typing-ind";
-        return div;
-      }
+  const div = document.createElement("div");
+  div.className = "chatbot-msg-bot";
+  div.innerHTML =
+    '<div class="chatbot-typing"><span></span><span></span><span></span></div>';
+  div.id = "typing-ind";
+  return div;
+}
 
-      function toggleChat() {
-        const container = document.getElementById("chatbot-container");
-        chatOpen = !chatOpen;
+function toggleChat() {
+  const container = document.getElementById("chatbot-container");
+  chatOpen = !chatOpen;
 
-        if (chatOpen) {
-          container.classList.add("active");
-          document.getElementById("chatbot-input").focus();
-          if (chatMessages.length === 0) {
-            const msg = createMessage(
-              "¡Hola! Soy tu asistente. ¿Cómo puedo ayudarte? 🧘✨",
-              false
-            );
-            document.getElementById("chatbot-messages").appendChild(msg);
-            chatMessages.push(msg);
-          }
-        } else {
-          container.classList.remove("active");
-        }
-      }
+  if (chatOpen) {
+    container.classList.add("active");
+    document.getElementById("chatbot-input").focus();
 
-      function sendMsg() {
-        const input = document.getElementById("chatbot-input");
-        const text = input.value.trim();
+    if (chatMessages.length === 0) {
+      const msg = createMessage(
+        "Hello! I'm your mindful assistant. How can I help you today? 🧘✨",
+        false
+      );
 
-        if (!text) return;
+      document.getElementById("chatbot-messages").appendChild(msg);
+      chatMessages.push(msg);
+    }
+  } else {
+    container.classList.remove("active");
+  }
+}
 
-        const messagesDiv = document.getElementById("chatbot-messages");
-        messagesDiv.appendChild(createMessage(text, true));
-        input.value = "";
+function sendMsg() {
+  const input = document.getElementById("chatbot-input");
+  const text = input.value.trim();
 
-        const typing = showTyping();
-        messagesDiv.appendChild(typing);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  if (!text) return;
 
-        setTimeout(() => {
-          typing.remove();
-          const response = generateResponse(text);
-          messagesDiv.appendChild(createMessage(response, false));
-          messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }, 600 + Math.random() * 300);
-      }
+  const messagesDiv = document.getElementById("chatbot-messages");
+  messagesDiv.appendChild(createMessage(text, true));
+  input.value = "";
 
-      function showToast(msg) {
-        const toast = document.createElement("div");
-        toast.className = "toast";
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-      }
+  const typing = showTyping();
+  messagesDiv.appendChild(typing);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+  setTimeout(() => {
+    typing.remove();
+    const response = generateResponse(text);
+    messagesDiv.appendChild(createMessage(response, false));
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }, 600 + Math.random() * 300);
+}
+
+function showToast(msg) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
       document
         .getElementById("chatbot-toggle")
         .addEventListener("click", toggleChat);
